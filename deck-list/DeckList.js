@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Text, View} from "react-native";
 import {getDecks, setDummyData} from "../utils/api";
+import DeckItem from "./DeckItem";
 
 class DeckList extends Component {
   componentDidMount() {
@@ -10,11 +11,12 @@ class DeckList extends Component {
   }
 
   render() {
+    const {status, decks} = this.props;
     return (
       <View>
         <Text>Deck List</Text>
-        <Text>Status: {this.props.status}</Text>
-        <Text>{JSON.stringify(this.props)}</Text>
+        <Text>Status: {status}</Text>
+        {!!decks && decks.map(item => <DeckItem deck={item} />)}
       </View>
     );
   }
@@ -22,7 +24,7 @@ class DeckList extends Component {
 
 function mapStateToProps(state) {
   return {
-    decks: state.decks.data,
+    decks: !!state.decks.data ? Object.values(state.decks.data) : [],
     status: state.decks.status
   }
 }
