@@ -7,13 +7,23 @@ import {purple, white} from "./utils/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import RootReducer from "./reducers/RootReducer";
-import {createStore} from "redux";
+import {applyMiddleware, compose, createStore} from "redux";
 import {Provider} from "react-redux";
+import {getDecks} from "./utils/api";
+import thunk from "redux-thunk";
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(RootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 export default class App extends React.Component {
+
+    componentDidMount() {
+        console.log('Loaded');
+    }
+
     render() {
         return (
-            <Provider store={createStore(RootReducer)}><Tabs></Tabs></Provider>
+            <Provider store={store}><Tabs></Tabs></Provider>
         );
     }
 }
