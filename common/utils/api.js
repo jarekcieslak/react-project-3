@@ -1,5 +1,5 @@
 import {AsyncStorage} from 'react-native';
-import {allDecksError, allDecksReceived, allDecksStart} from "../actions/actions";
+import {allDecksError, allDecksReceived, allDecksStart} from "../../actions/actions";
 
 export const DECKS_STORAGE_KEY = 'QuizApp:Decks';
 
