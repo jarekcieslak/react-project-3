@@ -1,5 +1,5 @@
-import deckDetailsReducer from "../deck/DeckDetailsReducer";
-import deckListReducer from "../deck-list/DeckListReducer";
+import deckDetailsReducer from "./DeckDetailsReducer";
+import deckListReducer from "./DeckListReducer";
 import {combineReducers} from "redux";
 
 
