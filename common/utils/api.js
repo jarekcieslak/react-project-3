@@ -16,14 +16,8 @@ export const getDecks = () => dispatch => {
     dispatch(allDecksStart());
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(JSON.parse)
-        .then(data => {
-            if (data) {
-                dispatch(allDecksReceived(data));
-                return data;
-            } else {
-                return [];
-            }
-        })
+        .then(data => !!data ? data : [])
+        .then(data => new Promise(resolve => setTimeout(() => resolve(dispatch(dispatch(allDecksReceived(data)))), 500)))
         .catch(error => {
             dispatch(allDecksError());
             console.warn('Error while getting decks data. ', error)
@@ -65,15 +59,15 @@ export function createDeck(deckTitle) {
 }
 
 // deleteDeck: take in a single id argument and delete deck from the db
-export function deleteDeck(deckId) {
+export const deleteDeck = (deckId) => dispatch => {
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(JSON.parse)
         .then(data => {
             delete data[deckId];
-            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
-                .catch(error => console.warn('Error while deleting data. ', error));
-            return deckId;
-        });
+            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+            return data;
+        })
+        .catch(error => console.warn('Error while deleting data. ', error));
 }
 
 

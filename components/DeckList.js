@@ -10,20 +10,18 @@ import {blue} from "../common/utils/colors";
 import {Button} from "react-native-elements";
 
 class DeckList extends Component {
+
     componentDidMount() {
-        this.props.dispatch(getDecks());
+        // this.props.dispatch(getDecks());
         this.props.navigation.addListener('willFocus', (payload) => {
             this.props.dispatch(getDecks());
             console.log('Loaded tab', payload);
         });
     }
 
-    setTestData() {
+    setTestData = () => {
         setDummyData();
-    }
-
-    componentDidUpdate() {
-        // this.props.dispatch(getDecks());
+        this.props.dispatch(getDecks());
     }
 
 

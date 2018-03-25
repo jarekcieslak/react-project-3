@@ -24,9 +24,9 @@ class DeckDetails extends Component {
 
   onDeckDelete = () => {
     const deckId = this.props.navigation.state.params.deckId;
-    deleteDeck(deckId);
+    this.props.dispatch(deleteDeck(deckId));
     this.goToHome();
-  }
+  };
 
   onDeckStart = () => {
     const deckId = this.props.navigation.state.params.deckId;
@@ -52,7 +52,7 @@ class DeckDetails extends Component {
             <Text style={styles.title}>{deck.title}</Text>
             <Text>This quiz contains {deck.questions.length} questions.</Text>
           </Card>
-          <View style={{height:20}}></View>
+          <View style={{height: 20}}></View>
           <Button
             buttonStyle={styles.button}
             title="Start quiz"
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginBottom: 30,
-    marginTop:10
+    marginTop: 10
   },
   title: {
     fontSize: 25, fontWeight: 'bold'
