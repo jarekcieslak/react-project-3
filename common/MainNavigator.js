@@ -7,6 +7,7 @@ import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import DeckDetails from "../components/DeckDetails";
+import DeckQuiz from "../components/DeckQuiz";
 
 
 export const Tabs = TabNavigator({
@@ -50,6 +51,15 @@ export const MainNavigator = StackNavigator({
     },
     DeckDetails: {
         screen: DeckDetails,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple,
+            }
+        }
+    },
+    DeckQuiz: {
+        screen: DeckQuiz,
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {

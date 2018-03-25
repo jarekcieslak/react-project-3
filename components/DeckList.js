@@ -1,20 +1,25 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ScrollView, StyleSheet, Text} from "react-native";
+import {ScrollView, StyleSheet} from "react-native";
 import {getDecks, setDummyData} from "../common/utils/api";
 import DeckListItem from "./DeckListItem";
 import NoData from "../common/noData/NoData";
 import Loading from "../common/loading/Loading";
 import Error from "../common/error/Error";
+import {blue} from "../common/utils/colors";
+import {Button} from "react-native-elements";
 
 class DeckList extends Component {
     componentDidMount() {
-        // setDummyData();
         this.props.dispatch(getDecks());
         this.props.navigation.addListener('willFocus', (payload) => {
             this.props.dispatch(getDecks());
             console.log('Loaded tab', payload);
         });
+    }
+
+    setTestData() {
+        setDummyData();
     }
 
     componentDidUpdate() {
@@ -30,6 +35,12 @@ class DeckList extends Component {
                 {status === 'loading' && <Loading></Loading>}
                 {status === 'ok' && !!decks && decks.length === 0 && <NoData></NoData>}
                 {status === 'ok' && !!decks && decks.map(item => <DeckListItem key={item.id} deck={item}/>)}
+                <Button
+                    style={{marginTop: 30}}
+                    title="Set testing data"
+                    backgroundColor={blue}
+                    onPress={this.setTestData}
+                />
             </ScrollView>
         );
     }

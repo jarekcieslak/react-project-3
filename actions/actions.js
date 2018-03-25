@@ -2,6 +2,11 @@ export const DECKS_LOAD_START = 'DECKS_LOAD_START';
 export const DECKS_LOAD_SUCCESS = 'DECKS_LOAD_SUCCESS';
 export const DECKS_LOAD_ERROR = 'DECKS_LOAD_ERROR';
 
+
+export const DECK_LOAD_START = 'DECK_LOAD_START';
+export const DECK_LOAD_SUCCESS = 'DECK_LOAD_SUCCESS';
+export const DECK_LOAD_ERROR = 'DECK_LOAD_ERROR';
+
 export const allDecksStart = () => {
     return {
         type: DECKS_LOAD_START,
@@ -21,3 +26,17 @@ export const allDecksError = (data) => {
         data: null
     }
 };
+
+
+export const deckLoadStart = () => {
+    return {type: DECK_LOAD_START,}
+};
+
+export const deckLoadSuccess = (data) => {
+    return {type: DECK_LOAD_SUCCESS, data}
+};
+
+export const deckLoadError = (data) => {
+    return {type: DECK_LOAD_ERROR, data: null}
+};
+

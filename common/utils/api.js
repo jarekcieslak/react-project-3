@@ -1,5 +1,12 @@
 import {AsyncStorage} from 'react-native';
-import {allDecksError, allDecksReceived, allDecksStart} from "../../actions/actions";
+import {
+    allDecksError,
+    allDecksReceived,
+    allDecksStart,
+    deckLoadError,
+    deckLoadStart,
+    deckLoadSuccess
+} from "../../actions/actions";
 
 export const DECKS_STORAGE_KEY = 'QuizApp:Decks';
 
@@ -24,11 +31,18 @@ export const getDecks = () => dispatch => {
 }
 
 // getDeck: take in a single id argument and return the deck associated with that id.
-export function getDeck(id) {
+export const getDeck = (id) => dispatch => {
+    dispatch(deckLoadStart());
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(JSON.parse)
-        .then(data => data[id])
-        .catch(error => console.warn('Error while getting deck data. ', error))
+        .then(data => {
+            dispatch(deckLoadSuccess(data[id]));
+            return data[id]
+        })
+        .catch(error => {
+            dispatch(deckLoadError());
+            console.warn('Error while getting deck data. ', error)
+        })
 }
 
 
@@ -87,11 +101,13 @@ export function setDummyData() {
             questions: [
                 {
                     question: 'What is React?',
-                    answer: 'A library for managing user interfaces'
+                    answer: 'A library for managing user interfaces',
+                    correctAnswer: true
                 },
                 {
                     question: 'Where do you make Ajax requests in React?',
-                    answer: 'The componentDidMount lifecycle event'
+                    answer: 'The componentDidMount lifecycle event',
+                    correctAnswer: true
                 }
             ]
         },
@@ -101,7 +117,8 @@ export function setDummyData() {
             questions: [
                 {
                     question: 'What is a closure?',
-                    answer: 'The combination of a function and the lexical environment within which that function was declared.'
+                    answer: 'The combination of a function and the lexical environment within which that function was declared.',
+                    correctAnswer: true
                 }
             ]
         }
