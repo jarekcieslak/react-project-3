@@ -12,10 +12,8 @@ import {Button} from "react-native-elements";
 class DeckList extends Component {
 
     componentDidMount() {
-        // this.props.dispatch(getDecks());
         this.props.navigation.addListener('willFocus', (payload) => {
             this.props.dispatch(getDecks());
-            console.log('Loaded tab', payload);
         });
     }
 
@@ -35,7 +33,7 @@ class DeckList extends Component {
                 {status === 'ok' && !!decks && decks.map(item => <DeckListItem key={item.id} deck={item}/>)}
                 <Button
                     style={{marginTop: 30}}
-                    title="Set testing data"
+                    title="Set test data"
                     backgroundColor={blue}
                     onPress={this.setTestData}
                 />
@@ -53,7 +51,7 @@ function mapStateToProps(state) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
 });
 

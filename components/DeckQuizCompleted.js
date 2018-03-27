@@ -2,22 +2,31 @@ import React, {Component} from 'react';
 import {blue} from "../common/utils/colors";
 import {StyleSheet, Text, View} from "react-native";
 import {Button, Card} from "react-native-elements";
-import {withNavigation} from "react-navigation";
+import {NavigationActions, withNavigation} from "react-navigation";
 
 class DeckQuizCompleted extends Component {
 
   getCorrectQuestionsRatio = (questions, answers) => {
-    let correctQuestions = 0;
-    answers.forEach((answer, index) => {
-      if (questions[index].correctAnswer === answer) {
-        correctQuestions++;
-      }
-    })
-    return Math.floor(correctQuestions / questions.length * 100);
+    if (questions && answers) {
+      let correctQuestions = 0;
+      answers.forEach((answer, index) => {
+        if (questions[index] && questions[index].correctAnswer === answer) {
+          correctQuestions++;
+        }
+      })
+      return Math.floor(correctQuestions / questions.length * 100);
+    } else return 0
   };
 
   goToHome = () => {
-    this.props.navigation.navigate('DeckList');
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'Home'}),
+      ],
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
   render() {

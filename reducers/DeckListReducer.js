@@ -1,4 +1,4 @@
-import {DECKS_LOAD_ERROR, DECKS_LOAD_START, DECKS_LOAD_SUCCESS} from "../actions/actions";
+import {DECK_ADD_QUESTION, DECKS_LOAD_ERROR, DECKS_LOAD_START, DECKS_LOAD_SUCCESS} from "../actions/actions";
 
 const initialState = {
     data: null,
@@ -23,6 +23,15 @@ export default function deckListReducer(state = initialState, action) {
                 status: 'error',
                 data: null
             };
+        case DECK_ADD_QUESTION:
+            const deck = state.data[action.id];
+            deck.questions = [...deck.questions, action.question];
+            const data = Object.assign({}, state.data);
+            return {
+                ...state,
+                data
+            }
+
 
         default:
             return state;

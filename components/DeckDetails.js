@@ -33,8 +33,9 @@ class DeckDetails extends Component {
     this.props.navigation.navigate('DeckQuiz', {deckId})
   }
 
-  onDeckEdit = () => {
-
+  onDeckAddQuestion = () => {
+    const deckId = this.props.navigation.state.params.deckId;
+    this.props.navigation.navigate('DeckAddQuestion', {deckId})
   }
 
   goToHome = () => {
@@ -54,6 +55,7 @@ class DeckDetails extends Component {
           </Card>
           <View style={{height: 20}}></View>
           <Button
+            disabled={deck.questions && deck.questions.length === 0}
             buttonStyle={styles.button}
             title="Start quiz"
             backgroundColor={blue}
@@ -62,10 +64,10 @@ class DeckDetails extends Component {
           />
           <Button
             buttonStyle={styles.button}
-            title="Edit quiz"
+            title="Add question"
             backgroundColor={orange}
             iconRight={{name: 'edit'}}
-            onPress={this.onDeckEdit}
+            onPress={this.onDeckAddQuestion}
           />
           <Button
             buttonStyle={styles.button}

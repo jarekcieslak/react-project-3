@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import DeckDetails from "../components/DeckDetails";
 import DeckQuiz from "../components/DeckQuiz";
+import DeckAddQuestion from "../components/DeckAddQuestion";
 
 
 export const Tabs = TabNavigator({
@@ -26,9 +27,8 @@ export const Tabs = TabNavigator({
         },
     },
 }, {
-    navigationOptions: {
-        header: null
-    },
+    navigationOptions: {},
+
     tabBarOptions: {
         activeTintColor: Platform.OS === 'ios' ? purple : white,
         style: {
@@ -48,6 +48,13 @@ export const Tabs = TabNavigator({
 export const MainNavigator = StackNavigator({
     Home: {
         screen: Tabs,
+        navigationOptions: {
+            title: "Home",
+            headerTintColor: "white",
+            headerStyle: {
+                backgroundColor: purple
+            }
+        }
     },
     DeckDetails: {
         screen: DeckDetails,
@@ -60,6 +67,15 @@ export const MainNavigator = StackNavigator({
     },
     DeckQuiz: {
         screen: DeckQuiz,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple,
+            }
+        }
+    },
+    DeckAddQuestion: {
+        screen: DeckAddQuestion,
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {

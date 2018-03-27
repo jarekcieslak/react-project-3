@@ -3,6 +3,7 @@ import {
     allDecksError,
     allDecksReceived,
     allDecksStart,
+    deckAddQuestion,
     deckLoadError,
     deckLoadStart,
     deckLoadSuccess
@@ -17,7 +18,7 @@ export const getDecks = () => dispatch => {
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(JSON.parse)
         .then(data => !!data ? data : [])
-        .then(data => new Promise(resolve => setTimeout(() => resolve(dispatch(dispatch(allDecksReceived(data)))), 500)))
+        .then(data => new Promise(resolve => setTimeout(() => resolve(dispatch(dispatch(allDecksReceived(data)))), 200)))
         .catch(error => {
             dispatch(allDecksError());
             console.warn('Error while getting decks data. ', error)
@@ -71,19 +72,21 @@ export const deleteDeck = (deckId) => dispatch => {
 }
 
 
-// addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
-export function addCardToDeck(deckId, card) {
-    return getDecks()
+// addQuestionToDeck: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
+export const addQuestionToDeck = (deckId, question) => dispatch => {
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        .then(JSON.parse)
         .then(data => {
             const deck = data[deckId];
             if (deck) {
-                deck.cards = [...deck.cards, card];
-                AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
-                    .catch(error => console.warn('Error while adding card to the given deck. ', error))
+                deck.questions = [...deck.questions, question];
+                AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+                dispatch(deckAddQuestion(deckId, question))
             } else {
                 console.warn('Deck with given ID does not exist');
             }
-        });
+        })
+        .catch(error => console.warn('Error while adding card to the given deck. ', error));
 }
 
 
