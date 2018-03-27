@@ -17,8 +17,15 @@ export const getDecks = () => dispatch => {
     dispatch(allDecksStart());
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(JSON.parse)
-        .then(data => !!data ? data : [])
-        .then(data => new Promise(resolve => setTimeout(() => resolve(dispatch(dispatch(allDecksReceived(data)))), 200)))
+        .then(data => {
+            if (!data) {
+                AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify({}))
+            }
+            return data
+        })
+        .then(data => {
+            return new Promise(resolve => setTimeout(() => resolve(dispatch(dispatch(allDecksReceived(data)))), 200))
+        })
         .catch(error => {
             dispatch(allDecksError());
             console.warn('Error while getting decks data. ', error)

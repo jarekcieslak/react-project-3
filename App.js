@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import {QuizStatusBar} from "./common/StatusBar";
 import {MainNavigator} from "./common/MainNavigator";
+import {setLocalNotification} from "./common/Notifications";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(RootReducer, composeEnhancers(applyMiddleware(thunk)));
@@ -14,7 +15,7 @@ const store = createStore(RootReducer, composeEnhancers(applyMiddleware(thunk)))
 export default class App extends React.Component {
 
     componentDidMount() {
-        console.log('Loaded');
+        setLocalNotification()
     }
 
     render() {

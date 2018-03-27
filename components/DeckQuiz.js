@@ -6,6 +6,7 @@ import Loading from "../common/loading/Loading";
 import {Button, Card} from "react-native-elements";
 import {gray, green, red} from "../common/utils/colors";
 import DeckQuizCompleted from "./DeckQuizCompleted";
+import {clearLocalNotification, setLocalNotification} from "../common/Notifications";
 
 class DeckQuiz extends Component {
 
@@ -63,14 +64,12 @@ class DeckQuiz extends Component {
           title="That's true."
           backgroundColor={green}
           onPress={() => this.getNextQuestion(true)}
-          iconRight={{name: 'play-arrow'}}
         />
         <Button
           buttonStyle={styles.button}
           title="It's false."
           backgroundColor={red}
           onPress={() => this.getNextQuestion(false)}
-          iconRight={{name: 'delete-forever'}}
         />
       </View>
     </View>)
@@ -78,6 +77,10 @@ class DeckQuiz extends Component {
   quizCompleted = () => {
     const {deck} = this.props;
     const {answers} = this.state;
+
+    // Clear local notification
+    clearLocalNotification().then(setLocalNotification)
+
     return (<DeckQuizCompleted questions={deck.questions} answers={answers}></DeckQuizCompleted>)
   }
 
