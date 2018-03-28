@@ -15,7 +15,8 @@ class DeckQuiz extends Component {
     currentQuestionNo: 0,
     currentQuestion: {},
     quizCompleted: false,
-    answers: []
+    answers: [],
+    answerVisible: false
   };
 
   componentDidMount() {
@@ -44,6 +45,12 @@ class DeckQuiz extends Component {
     }
   };
 
+  showAnswer = () => {
+    this.setState({
+      answerVisible: true
+    })
+  }
+
   getQuestion = (index) => this.props.deck.questions[index];
 
   renderQuiz = (deck) => (
@@ -56,18 +63,26 @@ class DeckQuiz extends Component {
         <Text style={styles.bold}>Question:</Text>
         <Text style={styles.questionText}>{this.state.currentQuestion.question}</Text>
         <Text style={styles.bold}>Answer:</Text>
-        <Text style={styles.answerText}>{this.state.currentQuestion.answer}</Text>
+
+        {!this.state.answerVisible && <Button
+          buttonStyle={styles.button}
+          title="Show answer"
+          onPress={() => this.showAnswer()}
+        />}
+
+        {this.state.answerVisible && <Text style={styles.answerText}>{this.state.currentQuestion.answer}</Text>}
+
       </Card>
       <View style={styles.buttonContainer}>
         <Button
           buttonStyle={styles.button}
-          title="That's true."
+          title="I was right."
           backgroundColor={green}
           onPress={() => this.getNextQuestion(true)}
         />
         <Button
           buttonStyle={styles.button}
-          title="It's false."
+          title="I was wrong."
           backgroundColor={red}
           onPress={() => this.getNextQuestion(false)}
         />
@@ -81,7 +96,7 @@ class DeckQuiz extends Component {
     // Clear local notification
     clearLocalNotification().then(setLocalNotification)
 
-    return (<DeckQuizCompleted questions={deck.questions} answers={answers}></DeckQuizCompleted>)
+    return (<DeckQuizCompleted deckId={deck.id} deckTitle={deck.title} answers={answers}></DeckQuizCompleted>)
   }
 
 

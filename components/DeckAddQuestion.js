@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Keyboard, KeyboardAvoidingView, StyleSheet, Text} from "react-native";
-import {green, purple, red} from "../common/utils/colors";
+import {purple} from "../common/utils/colors";
 import {Button, Card, FormInput, FormValidationMessage} from "react-native-elements";
 import {connect} from "react-redux";
 import {addQuestionToDeck} from "../common/utils/api";
@@ -11,8 +11,7 @@ class DeckAddQuestion extends Component {
     question: '',
     questionError: false,
     answer: '',
-    answerError: false,
-    correctAnswer: null
+    answerError: false
   }
 
   onQuestionSubmit = () => {
@@ -32,20 +31,13 @@ class DeckAddQuestion extends Component {
     if (!questionError && !answerError) {
       const question = {
         question: this.state.question,
-        answer: this.state.answer,
-        correctAnswer: this.state.correctAnswer
+        answer: this.state.answer
       };
 
       this.props.dispatch(addQuestionToDeck(id, question));
       this.props.navigation.dispatch(NavigationActions.back());
       Keyboard.dismiss();
     }
-  };
-
-  setAnswer = (answer) => {
-    this.setState({
-      correctAnswer: answer
-    })
   };
 
   render() {
@@ -70,23 +62,12 @@ class DeckAddQuestion extends Component {
             onChangeText={answer => this.setState({answer})}
             value={this.state.answer}
           />
+
           <FormValidationMessage>
             {this.state.answerError ? 'This field is required' : ''}
           </FormValidationMessage>
 
           <Text>The correct answer should be:</Text>
-
-          <Button
-            title="True"
-            backgroundColor={this.state.correctAnswer === true ? green : ''}
-            onPress={() => this.setAnswer(true)}
-          />
-          <Button
-            title="False"
-            backgroundColor={this.state.correctAnswer === false ? red : ''}
-            onPress={() => this.setAnswer(false)}
-          />
-
 
           <Button
             style={styles.submitButton}

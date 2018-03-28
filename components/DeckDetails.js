@@ -6,6 +6,7 @@ import {Button, Card} from "react-native-elements";
 import {blue, orange} from "../common/utils/colors";
 import Error from "../common/error/Error";
 import Loading from "../common/loading/Loading";
+import {NavigationActions} from "react-navigation";
 
 class DeckDetails extends Component {
 
@@ -39,7 +40,14 @@ class DeckDetails extends Component {
   }
 
   goToHome = () => {
-    this.props.navigation.navigate('DeckList');
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'Home'}),
+      ],
+    });
+    this.props.navigation.dispatch(resetAction);
+
   }
 
   render() {
@@ -74,6 +82,11 @@ class DeckDetails extends Component {
             title="Delete deck"
             onPress={this.onDeckDelete}
             iconRight={{name: 'delete-forever'}}
+          />
+          <Button
+            buttonStyle={styles.button}
+            title="List af all decks"
+            onPress={this.goToHome}
           /></View>)}
       </ScrollView>
     );

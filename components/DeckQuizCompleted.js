@@ -6,43 +6,49 @@ import {NavigationActions, withNavigation} from "react-navigation";
 
 class DeckQuizCompleted extends Component {
 
-  getCorrectQuestionsRatio = (questions, answers) => {
-    if (questions && answers) {
-      let correctQuestions = 0;
-      answers.forEach((answer, index) => {
-        if (questions[index] && questions[index].correctAnswer === answer) {
-          correctQuestions++;
-        }
-      })
-      return Math.floor(correctQuestions / questions.length * 100);
+  getCorrectQuestionsRatio = (answers) => {
+    if (answers && answers.length) {
+      let correctQuestions = answers.reduce((acc, item) => acc + item, 0);
+      return Math.floor(correctQuestions / answers.length * 100);
     } else return 0
   };
 
-  goToHome = () => {
-
+  restartQuiz = () => {
+    const {deckId} = this.props;
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({routeName: 'Home'}),
+        NavigationActions.navigate({routeName: 'DeckQuiz'}, {deckId}),
       ],
     });
     this.props.navigation.dispatch(resetAction);
   }
 
+  goBackToTheDeck = () => {
+    const {deckId, deckTitle} = this.props;
+    this.props.navigation.navigate('DeckDetails', {deckId, deckTitle});
+  }
+
   render() {
-    const {questions, answers} = this.props;
+    const {answers} = this.props;
 
     return (
       <View style={styles.container}>
         <Card>
           <Text style={styles.bigText}>Quiz completed!</Text>
-          <Text>Correct answers: {this.getCorrectQuestionsRatio(questions, answers)}%</Text>
+          <Text>Correct answers: {this.getCorrectQuestionsRatio(answers)}%</Text>
           <Button
             buttonStyle={styles.button}
-            title="Go to quiz list"
+            title="Back to deck"
             backgroundColor={blue}
-            onPress={() => this.goToHome()}
+            onPress={() => this.goBackToTheDeck()}
           />
+          <Button
+            buttonStyle={styles.button}
+            title="Restart quiz"
+            onPress={() => this.restartQuiz()}
+          />
+
         </Card>
       </View>
     )
