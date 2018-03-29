@@ -7,6 +7,7 @@ export const DECK_LOAD_START = 'DECK_LOAD_START';
 export const DECK_LOAD_SUCCESS = 'DECK_LOAD_SUCCESS';
 export const DECK_LOAD_ERROR = 'DECK_LOAD_ERROR';
 
+export const DECK_ADD = 'DECK_ADD';
 export const DECK_ADD_QUESTION = 'DECK_ADD_QUESTION';
 
 
@@ -44,6 +45,13 @@ export const deckLoadError = (data) => {
 };
 
 
+export const deckAdd = (deckId, deckTitle) => {
+    return {
+        type: DECK_ADD,
+        id: deckId,
+        deckTitle
+    }
+};
 export const deckAddQuestion = (deckId, question) => {
     return {
         type: DECK_ADD_QUESTION,

@@ -42,6 +42,8 @@ class DeckAddQuestion extends Component {
 
   render() {
     const {title} = this.props;
+    const {question, questionError, answer, answerError} = this.state;
+
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Card title={`Adding question to ${title}`}>
@@ -49,25 +51,23 @@ class DeckAddQuestion extends Component {
           <FormInput
             placeholder="Type your question."
             onChangeText={question => this.setState({question})}
-            value={this.state.question}
+            value={question}
           />
 
           <FormValidationMessage>
-            {this.state.questionError ? 'This field is required' : ''}
+            {questionError ? 'This field is required' : ''}
           </FormValidationMessage>
 
           <Text>Answer:</Text>
           <FormInput
             placeholder="Type your answer."
             onChangeText={answer => this.setState({answer})}
-            value={this.state.answer}
+            value={answer}
           />
 
           <FormValidationMessage>
-            {this.state.answerError ? 'This field is required' : ''}
+            {answerError ? 'This field is required' : ''}
           </FormValidationMessage>
-
-          <Text>The correct answer should be:</Text>
 
           <Button
             style={styles.submitButton}

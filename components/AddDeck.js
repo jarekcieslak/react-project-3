@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {KeyboardAvoidingView, Keyboard, StyleSheet} from "react-native";
+import {Keyboard, KeyboardAvoidingView, StyleSheet} from "react-native";
 import {purple, white} from "../common/utils/colors";
 import {Button, Card, FormInput, FormValidationMessage} from "react-native-elements";
 import {createDeck} from "../common/utils/api";
 import {withNavigation} from "react-navigation";
+import {connect} from "react-redux";
+import {deckAdd} from "../actions/actions";
 
 class AddDeck extends Component {
     state = {
@@ -13,8 +15,9 @@ class AddDeck extends Component {
 
     onDeckSubmit = () => {
         const {deckName} = this.state;
-        createDeck(deckName).then(data => {
-            this.props.navigation.navigate('DeckList');
+        createDeck(deckName).then(deckId => {
+            this.props.dispatch(deckAdd(deckId, deckName));
+            this.props.navigation.navigate('DeckDetails', {deckId, deckTitle: deckName});
             Keyboard.dismiss()
         })
     };
@@ -73,4 +76,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withNavigation(AddDeck);
+export default connect()(withNavigation(AddDeck));

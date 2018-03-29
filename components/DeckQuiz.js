@@ -35,12 +35,14 @@ class DeckQuiz extends Component {
       this.setState({
         answers,
         currentQuestionNo: newQuestionNo,
-        currentQuestion: this.getQuestion(newQuestionNo)
+        currentQuestion: this.getQuestion(newQuestionNo),
+        answerVisible: false
       });
     } else {
       this.setState({
         currentQuestion: {},
-        quizCompleted: true
+        quizCompleted: true,
+        answerVisible: false
       })
     }
   };

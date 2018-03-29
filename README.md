@@ -6,11 +6,11 @@ Project was created for the sole purpose of learning new technology. Short descr
 "This project encompasses the fundamental aspects of building a native application including handling infinite lists, routing, and user input." - via udacity.com. If you'd like to learn more about react nanodegree program please visit: https://udacity.com/course/react-nanodegree--nd019.
 
 ## Usage
+Install all the necessary dependencies
+### `npm instal` or `yarn install`
 
-If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
+Run the project (in development mode):
 ### `npm start` or `yarn start`
-
-Runs your app in development mode.
 
 Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
 
